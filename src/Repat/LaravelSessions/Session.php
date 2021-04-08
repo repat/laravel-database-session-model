@@ -2,6 +2,7 @@
 
 namespace Repat\LaravelSessions;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Config;
 
