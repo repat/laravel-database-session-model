@@ -11,15 +11,11 @@
 
 ## Documentation
 
-### Casting
-
-There is a casting to `\Carbon\Carbon` objects for: `last_activity`.
-
 ### Relationship / Attributes
 
 The attribute `unserialized_payload` returns the `payload` array, unserialized and base64 decoded. For more information, see the [Laravel Documentation on Eloquent Mutators](https://laravel.com/docs/8.x/eloquent-mutators).
 
-Originally `last_activity` is a Unix timestamp but it's now casted to a `\Carbon\Carbon`. You can get the original timestamp with `$session->last_activity->timestamp`.
+The attribute `last_activity_at` parses the `last_activity` as a UNIX timestamp.
 
 If you've kept the standard FQCN for Laravels User Model (`\App\Model\User::class`) you can use the `->user` relationship or extend this model and override the `user()` method.
 
@@ -36,9 +32,9 @@ $session->user; // App\Models\User, extend the relationship if you have a differ
 $session->ip_address; // string
 $session->user_agent; // string
 
-// (Casted) Attributes
+// Attributes
 $session->unserialized_payload; // array
-$session->last_activity; // \Carbon\Carbon
+$session->last_activity_at; // \Carbon\Carbon
 ```
 
 ## License
@@ -47,7 +43,7 @@ $session->last_activity; // \Carbon\Carbon
 
 ## Version
 
-* Version 0.1.1
+* Version 0.2
 
 ## Contact
 

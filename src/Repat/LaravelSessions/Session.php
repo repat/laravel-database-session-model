@@ -3,6 +3,7 @@
 namespace Repat\LaravelSessions;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Config;
 
@@ -30,15 +31,6 @@ class Session extends \Illuminate\Database\Eloquent\Model
     public $timestamps = false;
 
     /**
-     * Casting DB fields
-     *
-     * @var array
-     */
-    protected $casts = [
-        'last_activity' => 'datetime',
-    ];
-
-    /**
      * Use parent constructor and set table according to config file
      */
     public function __construct()
@@ -48,13 +40,24 @@ class Session extends \Illuminate\Database\Eloquent\Model
     }
 
     /**
-     * Unserialized Payload (base64 decoded too)
+     * Get Unserialized Payload (base64 decoded too)
      *
      * @return array
      */
     public function getUnserializedPayloadAttribute() : array
     {
         return unserialize(base64_decode($this->payload));
+    }
+
+    /**
+     * Manually set Payload (base64 encoded / serialized)
+     *
+     * @return void
+     */
+    public function setPayload(string $payload)
+    {
+        $this->payload = serialize(base64_encode($payload));
+        $this->save();
     }
 
     /**
@@ -65,5 +68,15 @@ class Session extends \Illuminate\Database\Eloquent\Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Last Activity Carbon instance
+     *
+     * @return Carbon
+     */
+    public function getLastActivityAtAttribute() : Carbon
+    {
+        return Carbon::createFromTimestamp($this->last_activity);
     }
 }
