@@ -43,7 +43,7 @@ $session->last_activity_at; // \Carbon\Carbon
 
 ## Version
 
-* Version 0.2
+* Version 0.3
 
 ## Contact
 
